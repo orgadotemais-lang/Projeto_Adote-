@@ -26,6 +26,16 @@ public class SolicitacaoService {
     }
 
     public Solicitacao salvar(Solicitacao solicitacao) {
+
+        if (!solicitacao.isAceitouTermo()) {
+            throw new RuntimeException("É necessário aceitar os termos para solicitar uma adoção.");
+        }
+
+        if (solicitacao.getAn() != null &&
+            "ADOTADO".equalsIgnoreCase(solicitacao.getAn().getStatus())) {
+            throw new RuntimeException("Não é possível solicitar a adoção de um animal já adotado.");
+        }
+
         return repository.save(solicitacao);
     }
 
