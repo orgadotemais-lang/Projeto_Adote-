@@ -1,6 +1,8 @@
 
 package br.edu.unifio.ecommerce.controladores;
 
+import jakarta.validation.Valid;
+
 import java.util.List;
 
 import org.springframework.http.ResponseEntity;
@@ -32,8 +34,8 @@ public class UsuarioController {
     }
 
     @PostMapping
-    public Usuario salvar(@RequestBody Usuario usuario) {
-        return service.salvar(usuario);
+    public Usuario salvar(@Valid @RequestBody Usuario usuario) {
+       return service.salvar(usuario);
     }
 
     @DeleteMapping("/{id}")

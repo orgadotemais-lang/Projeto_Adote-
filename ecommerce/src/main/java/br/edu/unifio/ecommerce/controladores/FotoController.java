@@ -1,7 +1,7 @@
 package br.edu.unifio.ecommerce.controladores;
 
 import java.util.List;
-
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -31,7 +31,7 @@ public class FotoController {
     }
 
     @PostMapping
-    public Foto salvar(@RequestBody Foto foto) {
+    public Foto salvar(@Valid @RequestBody Foto foto) {
         return service.salvar(foto);
     }
 

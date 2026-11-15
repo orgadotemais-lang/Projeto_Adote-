@@ -2,7 +2,7 @@ package br.edu.unifio.ecommerce.servicos;
 
 import java.util.List;
 import java.util.Optional;
-
+import br.edu.unifio.ecommerce.excecoes.RegraNegocioException;
 import org.springframework.stereotype.Service;
 
 import br.edu.unifio.ecommerce.entidades.Solicitacao;
@@ -28,12 +28,12 @@ public class SolicitacaoService {
     public Solicitacao salvar(Solicitacao solicitacao) {
 
         if (!solicitacao.isAceitouTermo()) {
-            throw new RuntimeException("É necessário aceitar os termos para solicitar uma adoção.");
+            throw new RegraNegocioException("É necessário aceitar os termos para solicitar uma adoção.");
         }
 
         if (solicitacao.getAn() != null &&
             "ADOTADO".equalsIgnoreCase(solicitacao.getAn().getStatus())) {
-            throw new RuntimeException("Não é possível solicitar a adoção de um animal já adotado.");
+            throw new RegraNegocioException("Não é possível solicitar a adoção de um animal já adotado.");
         }
 
         return repository.save(solicitacao);

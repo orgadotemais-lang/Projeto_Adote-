@@ -2,6 +2,8 @@ package br.edu.unifio.ecommerce.controladores;
 
 import java.util.List;
 
+import jakarta.validation.Valid;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -31,7 +33,7 @@ public class EncontradorController {
     }
 
     @PostMapping
-    public Encontrador salvar(@RequestBody Encontrador encontrador) {
+    public Encontrador salvar(@Valid @RequestBody Encontrador encontrador) {
         return service.salvar(encontrador);
     }
 

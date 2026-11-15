@@ -3,6 +3,8 @@ package br.edu.unifio.ecommerce.controladores;
 
 import java.util.List;
 
+import jakarta.validation.Valid;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -32,7 +34,7 @@ public class AdotanteController {
     }
 
     @PostMapping
-    public Adotante salvar(@RequestBody Adotante adotante) {
+    public Adotante salvar(@Valid @RequestBody Adotante adotante) {
         return service.salvar(adotante);
     }
 

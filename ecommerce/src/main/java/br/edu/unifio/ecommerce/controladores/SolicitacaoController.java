@@ -1,12 +1,13 @@
 package br.edu.unifio.ecommerce.controladores;
 
 import java.util.List;
-
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import br.edu.unifio.ecommerce.entidades.Solicitacao;
 import br.edu.unifio.ecommerce.servicos.SolicitacaoService;
+
 
 @RestController
 @RequestMapping("/solicitacoes")
@@ -31,7 +32,7 @@ public class SolicitacaoController {
     }
 
     @PostMapping
-    public Solicitacao salvar(@RequestBody Solicitacao solicitacao) {
+   public Solicitacao salvar(@Valid @RequestBody Solicitacao solicitacao) {
         return service.salvar(solicitacao);
     }
 
