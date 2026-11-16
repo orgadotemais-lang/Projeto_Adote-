@@ -104,6 +104,10 @@ As consultas exigem autenticação. Cadastro, atualização e exclusão são res
 
 ## Autor
 
-Nome: [PREENCHER]
+## Integrantes
 
-RA: [PREENCHER]
+- Guilherme Gabriel Marques Rodrigues — RA: 273337
+- Diego Domiciano de Andrade Luzio — RA: 272330
+- Felipe Santos Siqueira — RA: 273209
+- Guilherme Gonçalves Vieira — RA: 273546
+- Kauã Henrique Nogari Sabia — RA: 273554

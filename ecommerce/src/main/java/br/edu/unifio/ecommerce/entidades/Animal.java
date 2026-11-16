@@ -5,6 +5,8 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -44,9 +46,11 @@ public class Animal {
     @ManyToOne
     private Organizacao org;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "an")
     private List<Solicitacao> listaSolicitacoes;
 
     @OneToMany(mappedBy = "an")
     private List<Foto> listaFotos;
 }
+
