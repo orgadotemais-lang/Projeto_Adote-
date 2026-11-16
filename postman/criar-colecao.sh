@@ -1,0 +1,72 @@
+#!/bin/bash
+cat > postman/projeto-integrador.postman_collection.json <<'JSON'
+{
+  "info": {
+    "name": "Adote+ - Testes da API",
+    "description": "Testes de CRUD, consultas, validacoes e seguranca.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "auth": {
+    "type": "basic",
+    "basic": [
+      {"key": "username", "value": "admin", "type": "string"},
+      {"key": "password", "value": "admin123", "type": "string"}
+    ]
+  },
+  "variable": [
+    {"key": "baseUrl", "value": "http://localhost:8080"}
+  ],
+  "item": [
+    {
+      "name": "Animais",
+      "item": [
+        {"name": "Listar animais", "request": {"method": "GET", "url": "{{baseUrl}}/animais"}},
+        {"name": "Buscar animal", "request": {"method": "GET", "url": "{{baseUrl}}/animais/1"}},
+        {"name": "Filtrar disponíveis", "request": {"method": "GET", "url": "{{baseUrl}}/animais/status/DISPONIVEL"}},
+        {"name": "Cadastrar animal", "request": {"method": "POST", "header": [{"key": "Content-Type", "value": "application/json"}], "body": {"mode": "raw", "raw": "{\"nome\":\"Bolt\",\"especie\":\"Cachorro\",\"raca\":\"SRD\",\"porte\":\"MEDIO\",\"sexo\":\"MACHO\",\"cor\":\"Caramelo\",\"temperamento\":\"Docil\",\"dataNascimento\":\"2023-01-15\",\"castrado\":true,\"vacinado\":true,\"descricao\":\"Animal de teste\",\"status\":\"DISPONIVEL\",\"dataCadastro\":\"2026-11-15T10:00:00\"}"}, "url": "{{baseUrl}}/animais"}}
+      ]
+    },
+    {
+      "name": "Solicitacoes",
+      "item": [
+        {"name": "Listar solicitações", "request": {"method": "GET", "url": "{{baseUrl}}/solicitacoes"}},
+        {"name": "Filtrar pendentes", "request": {"method": "GET", "url": "{{baseUrl}}/solicitacoes/status/PENDENTE"}},
+        {"name": "Solicitação sem aceitar termos (409)", "request": {"method": "POST", "header": [{"key": "Content-Type", "value": "application/json"}], "body": {"mode": "raw", "raw": "{\"aceitouTermo\":false}"}, "url": "{{baseUrl}}/solicitacoes"}}
+      ]
+    },
+    {
+      "name": "Adotantes",
+      "item": [
+        {"name": "Listar adotantes", "request": {"method": "GET", "url": "{{baseUrl}}/adotantes"}},
+        {"name": "Cadastrar adotante", "request": {"method": "POST", "header": [{"key": "Content-Type", "value": "application/json"}], "body": {"mode": "raw", "raw": "{\"nome\":\"Carlos Teste\",\"email\":\"carlos.teste@email.com\",\"senha\":\"teste123\",\"telefone\":\"14999999999\",\"cidade\":\"Ourinhos\",\"bairro\":\"Centro\",\"cpf\":\"12345678901\"}"}, "url": "{{baseUrl}}/adotantes"}}
+      ]
+    },
+    {
+      "name": "Organizacoes",
+      "item": [
+        {"name": "Listar organizações", "request": {"method": "GET", "url": "{{baseUrl}}/organizacoes"}},
+        {"name": "Cadastrar organização", "request": {"method": "POST", "header": [{"key": "Content-Type", "value": "application/json"}], "body": {"mode": "raw", "raw": "{\"nome\":\"ONG Teste\",\"email\":\"ong.teste@email.com\",\"senha\":\"teste123\",\"telefone\":\"14999999998\",\"cidade\":\"Ourinhos\",\"bairro\":\"Centro\",\"cnpj\":\"12345678000199\",\"nomeOrg\":\"ONG Teste\",\"statusValidacao\":\"EM_ANALISE\"}"}, "url": "{{baseUrl}}/organizacoes"}}
+      ]
+    },
+    {
+      "name": "Outros recursos",
+      "item": [
+        {"name": "Listar usuários", "request": {"method": "GET", "url": "{{baseUrl}}/usuarios"}},
+        {"name": "Listar encontradores", "request": {"method": "GET", "url": "{{baseUrl}}/encontradores"}},
+        {"name": "Listar resgates", "request": {"method": "GET", "url": "{{baseUrl}}/resgates"}},
+        {"name": "Listar etapas", "request": {"method": "GET", "url": "{{baseUrl}}/etapas"}},
+        {"name": "Listar fotos", "request": {"method": "GET", "url": "{{baseUrl}}/fotos"}}
+      ]
+    },
+    {
+      "name": "Testes de erros",
+      "item": [
+        {"name": "Animal inexistente (404)", "request": {"method": "GET", "url": "{{baseUrl}}/animais/999999"}},
+        {"name": "Sem autenticação (401)", "request": {"method": "GET", "auth": {"type": "noauth"}, "url": "{{baseUrl}}/animais"}},
+        {"name": "Usuário comum tentando cadastrar (403)", "request": {"method": "POST", "auth": {"type": "basic", "basic": [{"key": "username", "value": "usuario", "type": "string"}, {"key": "password", "value": "usuario123", "type": "string"}]}, "header": [{"key": "Content-Type", "value": "application/json"}], "body": {"mode": "raw", "raw": "{\"nome\":\"Teste\"}"}, "url": "{{baseUrl}}/animais"}}
+      ]
+    }
+  ]
+}
+JSON
+echo "Coleção criada."
