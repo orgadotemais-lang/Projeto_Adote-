@@ -37,6 +37,19 @@ public class OrganizacaoController {
         return service.salvar(organizacao);
     }
 
+    @PutMapping("/{id}")
+    public ResponseEntity<Organizacao> atualizar(
+            @PathVariable Integer id,
+            @Valid @RequestBody Organizacao organizacao) {
+
+        return service.buscarPorId(id)
+                .map(organizacaoExistente -> {
+                    organizacao.setId(id);
+                    return ResponseEntity.ok(service.salvar(organizacao));
+                })
+                .orElse(ResponseEntity.notFound().build());
+    }
+
     @DeleteMapping("/{id}")
     public void excluir(@PathVariable Integer id) {
         service.excluir(id);

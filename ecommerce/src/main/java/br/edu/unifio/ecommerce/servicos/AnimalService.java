@@ -1,3 +1,4 @@
+
 package br.edu.unifio.ecommerce.servicos;
 
 import java.util.List;
@@ -23,6 +24,10 @@ public class AnimalService {
 
     public Optional<Animal> buscarPorId(Integer id) {
         return repository.findById(id);
+    }
+
+    public List<Animal> buscarPorStatus(String status) {
+        return repository.buscarPorStatus(status);
     }
 
     public Animal salvar(Animal animal) {

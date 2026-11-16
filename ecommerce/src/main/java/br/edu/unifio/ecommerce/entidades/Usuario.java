@@ -1,5 +1,7 @@
 package br.edu.unifio.ecommerce.entidades;
 
+
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -31,6 +33,7 @@ public class Usuario {
 
     @NotBlank(message = "A senha é obrigatória")
     @Size(min = 6, message = "A senha deve ter pelo menos 6 caracteres")
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String senha;
 
     private String telefone;

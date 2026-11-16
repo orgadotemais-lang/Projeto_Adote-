@@ -1,3 +1,4 @@
+
 package br.edu.unifio.ecommerce.controladores;
 
 import java.util.List;
@@ -25,6 +26,11 @@ public class AnimalController {
         return service.listar();
     }
 
+    @GetMapping("/status/{status}")
+    public List<Animal> buscarPorStatus(@PathVariable String status) {
+        return service.buscarPorStatus(status);
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<Animal> buscarPorId(@PathVariable Integer id) {
         return service.buscarPorId(id)
@@ -35,6 +41,18 @@ public class AnimalController {
     @PostMapping
     public Animal salvar(@Valid @RequestBody Animal animal) {
         return service.salvar(animal);
+    }
+    @PutMapping("/{id}")
+    public ResponseEntity<Animal> atualizar(
+        @PathVariable Integer id,
+        @Valid @RequestBody Animal animal) {
+
+        return service.buscarPorId(id)
+            .map(animalExistente -> {
+                animal.setId(id);
+                return ResponseEntity.ok(service.salvar(animal));
+            })
+            .orElse(ResponseEntity.notFound().build());
     }
 
     @DeleteMapping("/{id}")

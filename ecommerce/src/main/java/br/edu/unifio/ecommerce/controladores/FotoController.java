@@ -1,7 +1,9 @@
 package br.edu.unifio.ecommerce.controladores;
 
 import java.util.List;
+
 import jakarta.validation.Valid;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -33,6 +35,19 @@ public class FotoController {
     @PostMapping
     public Foto salvar(@Valid @RequestBody Foto foto) {
         return service.salvar(foto);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Foto> atualizar(
+            @PathVariable Integer id,
+            @Valid @RequestBody Foto foto) {
+
+        return service.buscarPorId(id)
+                .map(fotoExistente -> {
+                    foto.setId(id);
+                    return ResponseEntity.ok(service.salvar(foto));
+                })
+                .orElse(ResponseEntity.notFound().build());
     }
 
     @DeleteMapping("/{id}")

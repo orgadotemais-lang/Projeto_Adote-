@@ -1,7 +1,9 @@
 package br.edu.unifio.ecommerce.controladores;
 
 import java.util.List;
+
 import jakarta.validation.Valid;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -33,6 +35,19 @@ public class EtapaController {
     @PostMapping
     public Etapa salvar(@Valid @RequestBody Etapa etapa) {
         return service.salvar(etapa);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Etapa> atualizar(
+            @PathVariable Integer id,
+            @Valid @RequestBody Etapa etapa) {
+
+        return service.buscarPorId(id)
+                .map(etapaExistente -> {
+                    etapa.setId(id);
+                    return ResponseEntity.ok(service.salvar(etapa));
+                })
+                .orElse(ResponseEntity.notFound().build());
     }
 
     @DeleteMapping("/{id}")

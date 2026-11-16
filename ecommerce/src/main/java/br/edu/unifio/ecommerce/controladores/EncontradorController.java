@@ -37,6 +37,19 @@ public class EncontradorController {
         return service.salvar(encontrador);
     }
 
+    @PutMapping("/{id}")
+    public ResponseEntity<Encontrador> atualizar(
+            @PathVariable Integer id,
+            @Valid @RequestBody Encontrador encontrador) {
+
+        return service.buscarPorId(id)
+                .map(encontradorExistente -> {
+                    encontrador.setId(id);
+                    return ResponseEntity.ok(service.salvar(encontrador));
+                })
+                .orElse(ResponseEntity.notFound().build());
+    }
+
     @DeleteMapping("/{id}")
     public void excluir(@PathVariable Integer id) {
         service.excluir(id);

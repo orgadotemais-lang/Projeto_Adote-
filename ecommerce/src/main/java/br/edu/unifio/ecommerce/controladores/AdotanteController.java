@@ -1,4 +1,3 @@
-
 package br.edu.unifio.ecommerce.controladores;
 
 import java.util.List;
@@ -36,6 +35,19 @@ public class AdotanteController {
     @PostMapping
     public Adotante salvar(@Valid @RequestBody Adotante adotante) {
         return service.salvar(adotante);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Adotante> atualizar(
+            @PathVariable Integer id,
+            @Valid @RequestBody Adotante adotante) {
+
+        return service.buscarPorId(id)
+                .map(adotanteExistente -> {
+                    adotante.setId(id);
+                    return ResponseEntity.ok(service.salvar(adotante));
+                })
+                .orElse(ResponseEntity.notFound().build());
     }
 
     @DeleteMapping("/{id}")

@@ -1,8 +1,6 @@
-
 package br.edu.unifio.ecommerce.controladores;
 
 import jakarta.validation.Valid;
-
 import java.util.List;
 
 import org.springframework.http.ResponseEntity;
@@ -35,7 +33,20 @@ public class UsuarioController {
 
     @PostMapping
     public Usuario salvar(@Valid @RequestBody Usuario usuario) {
-       return service.salvar(usuario);
+        return service.salvar(usuario);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Usuario> atualizar(
+            @PathVariable Integer id,
+            @Valid @RequestBody Usuario usuario) {
+
+        return service.buscarPorId(id)
+                .map(usuarioExistente -> {
+                    usuario.setId(id);
+                    return ResponseEntity.ok(service.salvar(usuario));
+                })
+                .orElse(ResponseEntity.notFound().build());
     }
 
     @DeleteMapping("/{id}")
